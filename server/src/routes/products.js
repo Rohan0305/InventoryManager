@@ -22,7 +22,7 @@ router.get("/get-products", async (req, res) => {
 
 router.post("/create-product", async (req, res) => {
     const product = await new ProductModel(req.body);
-    
+    console.log(product);
     try {
         await product.save();
         res.json(product);
