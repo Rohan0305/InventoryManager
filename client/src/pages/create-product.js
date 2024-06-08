@@ -7,7 +7,7 @@ export const CreateProduct = () => {
   const userID = useGetUserID();
   const [product, setProduct] = useState({
     name: "",
-    price: 0,
+    price: 0.00,
     imageURL: "",
     owner: userID,
   });
@@ -63,6 +63,7 @@ export const CreateProduct = () => {
           type="number"
           id="price"
           name="price"
+          step="0.01"
           value={product.price}
           onChange={handleChange}
         />
