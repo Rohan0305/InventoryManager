@@ -25,14 +25,23 @@ export const CreateProduct = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      console.log(product);
-      await axios.post("http://localhost:3001/products/create-product", product);
-      alert("Recipe Created");
-      navigate("/");
+        console.log(product);
+        const response = await axios.post("http://localhost:3001/products/create-product", product);
+        alert("Recipe Created");
+        const { owner: userId, _id: productId } = response.data;
+
+        const user = await axios.put("http://localhost:3001/products/", {
+            userId,
+            productId
+        });
+        console.log(user);
+
+        navigate("/");
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
-  };
+};
+
 
   return (
     <div className="create-product">
