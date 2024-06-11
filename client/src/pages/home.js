@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useGetUserID } from "../hooks/getUserID";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const Home = () => {
   const [products, setProducts] = useState([]);
-
   const userId = useGetUserID();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(userId);
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:3001/products/get-products", {
@@ -21,9 +21,11 @@ export const Home = () => {
     };
 
     fetchProducts();
-    
   }, [userId]);
 
+  const handleEdit = (productId) => {
+    navigate(`/edit-product/${productId}`);
+  };
 
   return (
     <div>
@@ -36,6 +38,7 @@ export const Home = () => {
             </div>
             <img src={product.imageURL} alt={product.name} />
             <p>Price: ${product.price} </p>
+            <button onClick={() => handleEdit(product._id)}>Edit</button>
           </li>
         ))}
       </ul>

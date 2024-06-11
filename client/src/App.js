@@ -4,7 +4,7 @@ import { Navbar } from "./components/navbar";
 import { Auth } from "./pages/auth";
 import { CreateProduct } from "./pages/create-product";
 import { Home } from "./pages/home";
-// import { Orders } from "./pages/orders";
+import { EditProduct } from "./pages/edit-product";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create-product" element={<CreateProduct />} />
-          {/* <Route path="/orders" element={<Orders />} />  */}
+          <Route path="/edit-product/:productId" element={<EditProduct />} /> 
           <Route path="/auth" element={<Auth />} />
         </Routes>
       </Router>
