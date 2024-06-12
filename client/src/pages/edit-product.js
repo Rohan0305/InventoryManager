@@ -44,6 +44,8 @@ export const EditProduct = () => {
     }
   };
 
+
+
   return (
     <div>
       <h2>Edit Product</h2>

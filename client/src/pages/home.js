@@ -6,6 +6,7 @@ import axios from "axios";
 export const Home = () => {
   const [products, setProducts] = useState([]);
   const userId = useGetUserID();
+  const [productId, setProductId] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +28,18 @@ export const Home = () => {
     navigate(`/edit-product/${productId}`);
   };
 
+  const handleDelete = async (productId) => {
+    try {
+      setProductId(productId);
+      await axios.delete(`http://localhost:3001/products/delete-product/${productId}`);
+      await axios.put(`http://localhost:3001/products/remove-product/${productId}`, { userId });
+      alert("Product deleted");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <h1>Products</h1>
@@ -38,7 +51,10 @@ export const Home = () => {
             </div>
             <img src={product.imageURL} alt={product.name} />
             <p>Price: ${product.price} </p>
-            <button onClick={() => handleEdit(product._id)}>Edit</button>
+            <div style={{ display: "flex"}}>
+                <button onClick={() => handleEdit(product._id)}>Edit</button>
+                <button onClick = {() => handleDelete(product._id)}> Delete </button>
+            </div>
           </li>
         ))}
       </ul>
