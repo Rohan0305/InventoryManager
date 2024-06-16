@@ -40,6 +40,10 @@ export const Home = () => {
     }
   };
 
+  const handleAddOrder = (productId) => {
+    navigate(`/create-order/${productId}`);
+  };
+
   return (
     <div>
       <h1>Products</h1>
@@ -51,9 +55,12 @@ export const Home = () => {
             </div>
             <img src={product.imageURL} alt={product.name} />
             <p>Price: ${product.price} </p>
-            <div style={{ display: "flex"}}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ display: "flex", marginBottom: "10px" }}>
                 <button onClick={() => handleEdit(product._id)}>Edit</button>
-                <button onClick = {() => handleDelete(product._id)}> Delete </button>
+                <button onClick={() => handleDelete(product._id)}>Delete</button>
+              </div>
+              <button onClick={() => handleAddOrder(product._id)}>Add Order</button>
             </div>
           </li>
         ))}
@@ -61,3 +68,4 @@ export const Home = () => {
     </div>
   );
 };
+

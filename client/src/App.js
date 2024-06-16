@@ -5,6 +5,7 @@ import { Auth } from "./pages/auth";
 import { CreateProduct } from "./pages/create-product";
 import { Home } from "./pages/home";
 import { EditProduct } from "./pages/edit-product";
+import { CreateOrder } from "./pages/create-order";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/create-product" element={<CreateProduct />} />
           <Route path="/edit-product/:productId" element={<EditProduct />} /> 
           <Route path="/auth" element={<Auth />} />
+          <Route path="/create-order/:productId" element={<CreateOrder />} />
         </Routes>
       </Router>
     </div>

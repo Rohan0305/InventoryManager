@@ -10,6 +10,7 @@ export const CreateProduct = () => {
     price: 0.00,
     imageURL: "",
     owner: userID,
+    order: [],
   });
 
   const navigate = useNavigate();
