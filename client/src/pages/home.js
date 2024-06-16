@@ -44,6 +44,10 @@ export const Home = () => {
     navigate(`/create-order/${productId}`);
   };
 
+  const handleViewOrders = (productId) => {
+    navigate(`/view-orders/${productId}`);
+  };
+
   return (
     <div>
       <h1>Products</h1>
@@ -61,6 +65,7 @@ export const Home = () => {
                 <button onClick={() => handleDelete(product._id)}>Delete</button>
               </div>
               <button onClick={() => handleAddOrder(product._id)}>Add Order</button>
+              <button onClick={() => handleViewOrders(product._id)}>View Orders</button>
             </div>
           </li>
         ))}
