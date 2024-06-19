@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 export const ViewOrders = () => {
   const [orders, setOrders] = useState([]);
   const { productId } = useParams();
@@ -21,21 +20,9 @@ export const ViewOrders = () => {
     fetchOrders();
   }, [productId]);
 
-//   const handleEdit = (productId) => {
-//     navigate(`/edit-product/${productId}`);
-//   };
-
-//   const handleDelete = async (productId) => {
-//     try {
-//       setProductId(productId);
-//       await axios.delete(`http://localhost:3001/products/delete-product/${productId}`);
-//       await axios.put(`http://localhost:3001/products/remove-product/${productId}`, { userId });
-//       alert("Product deleted");
-//       navigate("/");
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
+  const handleEditOrder = (orderId) => {
+    navigate(`/edit-order/${orderId}`, { state: { productId } });
+  };
 
   return (
     <div>
@@ -44,13 +31,14 @@ export const ViewOrders = () => {
         {orders.map((order) => (
           <li key={order._id}>
             <div>
-              <h2>{order.vendor_name}</h2>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <h1>Price: ${order.price}</h1>
-                    <h1>Items: {order.items} </h1>
-                    <h1>Date: {order.date} </h1>
-                    <h1>Price Per Unit: {order.ppu}</h1>
-                </div>
+              <h1>Vendor Name: {order.vendor_name}</h1>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <h2>Price: ${order.price}</h2>
+                <h2>Items: {order.items} </h2>
+                <h2>Date: {order.date} </h2>
+                <h2>Price Per Unit: ${order.ppu}</h2>
+              </div>
+              <button onClick={() => handleEditOrder(order._id)}>Edit</button>
             </div>
           </li>
         ))}

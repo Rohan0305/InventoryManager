@@ -6,7 +6,7 @@ const OrderSchema = new mongoose.Schema({
   items: { type: Number, required: true },       
   date: { type: Date, required: true, default: Date.now }, 
   ppu: { type: Number, required: true }, 
-  productId: {type: mongoose.Schema.ObjectId, ref: "products", required: true},
+  productId: {type: mongoose.Schema.ObjectId, ref: "products"},
 });
 
 export const OrderModel = mongoose.model("orders", OrderSchema);

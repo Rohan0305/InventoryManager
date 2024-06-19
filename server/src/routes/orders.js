@@ -51,5 +51,37 @@ router.get("/get-orders/:productId", async (req, res) => {
     }
   }); 
 
+  router.get("/get-order/:orderId", async (req, res) => {
+    try {
+      const order = await OrderModel.findById(req.params.orderId);
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+
+      res.status(200).json({ order }); 
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  }); 
+
+  router.put('/update-order/:orderId', async (req, res) => {
+    const { orderId } = req.params;
+    const updatedOrderData = req.body;
+  
+    try {
+      const updatedOrder = await OrderModel.findByIdAndUpdate(orderId, updatedOrderData, { new: true });
+  
+      if (!updatedOrder) {
+        return res.status(404).send({ message: 'Order not found' });
+      }
+  
+      res.status(200).send(updatedOrder);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: 'Failed to update order', error: error.message });
+    }
+  });
+
 
 export { router as ordersRouter };
