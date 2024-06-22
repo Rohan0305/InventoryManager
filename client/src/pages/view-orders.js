@@ -24,6 +24,17 @@ export const ViewOrders = () => {
     navigate(`/edit-order/${orderId}`, { state: { productId } });
   };
 
+  const handleDeleteOrder = async (orderId) => {
+    try {
+      await axios.delete(`http://localhost:3001/orders/delete-order/${orderId}`);
+      await axios.put(`http://localhost:3001/orders/remove-order/${orderId}`, { productId });
+      alert("Order Deleted");
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       <h1>Orders</h1>
@@ -38,7 +49,10 @@ export const ViewOrders = () => {
                 <h2>Date: {order.date} </h2>
                 <h2>Price Per Unit: ${order.ppu}</h2>
               </div>
-              <button onClick={() => handleEditOrder(order._id)}>Edit</button>
+              <div style={{ display: "flex", marginBottom: "10px" }}>
+                <button onClick={() => handleEditOrder(order._id)}>Edit</button>
+                <button onClick={() => handleDeleteOrder(order._id)}>Delete</button>
+              </div>
             </div>
           </li>
         ))}

@@ -6,15 +6,14 @@ export const EditOrder = () => {
   const { orderId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { productId } = location.state || ""; // Get productId from state or set it to an empty string
-
+  const { productId } = location.state || ""; 
   const [order, setOrder] = useState({
     vendor_name: "",
     price: 0.00,
     items: 0,
     date: "",
     ppu: 0.00,
-    productId: productId || "" // Use the productId from state
+    productId: productId || "" 
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -49,7 +48,7 @@ export const EditOrder = () => {
     try {
       await axios.put(`http://localhost:3001/orders/update-order/${orderId}`, order);
       alert("Order updated");
-      navigate(`/view-orders/${productId}`); // Navigate back to the orders list of the specific product
+      navigate(`/view-orders/${productId}`); 
     } catch (error) {
       console.error(error);
       setError("Failed to update order");

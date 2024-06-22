@@ -83,5 +83,33 @@ router.get("/get-orders/:productId", async (req, res) => {
     }
   });
 
+  router.delete("/delete-order/:orderId", async (req, res) => {
+    try {
+      const order = await OrderModel.findByIdAndDelete(req.params.orderId);
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+      res.status(200).json({ message: "Order deleted successfully" });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
+  router.put("/remove-order/:orderId", async (req, res) => {
+    try {
+      const { productId } = req.body;
+      const product = await ProductModel.findById(productId);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+  
+      product.orders = product.orders.filter(order => order.toString() !== req.params.orderId);
+      await product.save();
+      res.status(200).json({ message: "Order removed from product" });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
 
 export { router as ordersRouter };
