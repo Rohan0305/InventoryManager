@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useGetUserID } from "../hooks/getUserID";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export const CreateProduct = () => {
   const userID = useGetUserID();
+  const [cookies, _] = useCookies(["access_token"]);
   const [product, setProduct] = useState({
     name: "",
     price: 0.00,
@@ -27,7 +29,11 @@ export const CreateProduct = () => {
     event.preventDefault();
     try {
         console.log(product);
-        const response = await axios.post("http://localhost:3001/products/create-product", product);
+      const response = await axios.post("http://localhost:3001/products/create-product", product, 
+          {
+            headers: { authorization: cookies.access_token },
+          }
+      );
         alert("Recipe Created");
         const { owner: userId, _id: productId } = response.data;
 

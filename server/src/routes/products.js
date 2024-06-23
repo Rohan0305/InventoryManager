@@ -2,6 +2,7 @@ import express from "express";
 
 import { UserModel } from "../models/Users.js"
 import { ProductModel } from "../models/Products.js";
+import { verifyToken } from "./users.js";
 
 
 const router = express.Router();
@@ -80,7 +81,7 @@ router.get("/get-products", async (req, res) => {
     }
   });
 
-router.post("/create-product", async (req, res) => {
+router.post("/create-product", verifyToken, async (req, res) => {
     const product = await new ProductModel(req.body);
     try {
         await product.save();
