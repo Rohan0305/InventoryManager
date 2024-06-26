@@ -26,6 +26,22 @@ router.get("/get-products", async (req, res) => {
       res.status(500).json(err);
     }
   });
+
+  router.get('/get-products/price-range', async (req, res) => {
+    const { userId, minPrice, maxPrice } = req.query;
+  
+    try {
+      const products = await ProductModel.find({
+        owner: userId,
+        price: { $gte: minPrice, $lte: maxPrice }
+      });
+  
+      res.status(200).json({ products });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server Error' });
+    }
+  });
   
   router.get("/get-product/:productId", async (req, res) => {
     try {
@@ -104,6 +120,9 @@ router.put("/", async (req, res) => {
     }
  
 });
+
+
+
 
 
 export { router as productsRouter };

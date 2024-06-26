@@ -8,6 +8,8 @@ export const Home = () => {
   const userId = useGetUserID();
   const [productId, setProductId] = useState("");
   const navigate = useNavigate();
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -48,10 +50,54 @@ export const Home = () => {
     navigate(`/view-orders/${productId}`);
   };
 
+  const handleStartChange = (event) => {
+    setStart(event.target.value);
+  };
+
+  const handleEndChange = (event) => {
+    setEnd(event.target.value);
+  };
+
+  const handleSetPriceRange = async (event) => {
+    event.preventDefault(); 
+    try {
+      const response = await axios.get("http://localhost:3001/products/get-products/price-range", {
+        params: { userId, minPrice: start, maxPrice: end },
+      });
+      setProducts(response.data.products);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   return (
     <div>
       <h1>Products</h1>
       <ul>
+      <form onSubmit={handleSetPriceRange}>
+        <div>
+          <label htmlFor="Start">Minumum Price: </label>
+          <input
+            type="number"
+            id="Start"
+            name="Start"
+            value={start}
+            onChange={handleStartChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="End">Maximim Price: </label>
+            <input
+              type="number"
+              id="End"
+              name="End"
+              value={end}
+              onChange={handleEndChange}
+            />
+        </div>
+        <button type="submit">Set Price Range</button>
+      </form>
         {products.map((product) => (
           <li key={product._id}>
             <div>
